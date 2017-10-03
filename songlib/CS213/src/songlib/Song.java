@@ -1,7 +1,7 @@
-package songlib;
+package application;
 
 public class Song {
-
+	int select=0;
 	String song;
 	String artist;
 	String album;
@@ -22,4 +22,28 @@ public class Song {
 			year=Integer.parseInt(Year);
 		}
 	}
+	
+	public String detail(){
+		if(this.album==null && this.year==0){
+			return "Song: " + this.song + "\tArtist: " + this.artist;
+		}
+		else if(this.album==null){
+			return "Song: " + this.song + "\tArtist: " + this.artist + "\tYear: " + this.year;
+		}
+		else if(this.year==0){
+			return "Song: " + this.song + "\tArtist: " + this.artist+ "\tAlbum: " + this.album;
+		}
+		
+		return "Song: " + this.song + "\tArtist: " + this.artist+ "\tAlbum: "+ this.album +"\tYear: "+ this.year;
+		
+	}
+
+	public String toString(){
+		
+		return "Song: " + this.song + "\tArtist: " + this.artist;
+		
+	}
+	
+	
 }
+
