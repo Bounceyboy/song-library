@@ -253,6 +253,11 @@ public class Main extends Application {
 		artist.setText("Artist: "+listview.getSelectionModel().getSelectedItem().artist);
 		if(listview.getSelectionModel().getSelectedItem().album != null){
 			album.setText("Album: "+listview.getSelectionModel().getSelectedItem().album);
+			year.setLayoutY(55);
+		}
+		else{
+			 album.setText(null);
+			 year.setLayoutY(40);
 		}
 		if(listview.getSelectionModel().getSelectedItem().year != null){
 			year.setText("Year: "+listview.getSelectionModel().getSelectedItem().year);
