@@ -64,10 +64,10 @@ public class Main extends Application {
 		song.setText("Song: "+listview.getSelectionModel().getSelectedItem().song);
 		artist.setText("Artist: "+listview.getSelectionModel().getSelectedItem().artist);
 		if(listview.getSelectionModel().getSelectedItem().album != null){
-			album.setText("Artist: "+listview.getSelectionModel().getSelectedItem().album);
+			album.setText("Album: "+listview.getSelectionModel().getSelectedItem().album);
 		}
 		if(listview.getSelectionModel().getSelectedItem().year != null){
-			year.setText("Artist: "+listview.getSelectionModel().getSelectedItem().year);
+			year.setText("Year: "+listview.getSelectionModel().getSelectedItem().year);
 		}
 	}
 	
