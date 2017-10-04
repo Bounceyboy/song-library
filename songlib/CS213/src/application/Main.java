@@ -18,6 +18,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -91,6 +92,8 @@ public class Main extends Application {
 
 		HBox addEdit = new HBox(10.0);
 		HBox deleter = new HBox();
+
+
 
 		Button addButton = new Button("Add");
 		Button editButton = new Button("Edit currently selected song");
@@ -224,7 +227,7 @@ public class Main extends Application {
 		addEdit.getChildren().addAll(addButton,editButton);
 		deleter.getChildren().add(deleteButton);
 
-		anchorpane.getChildren().addAll(listview,song,artist,album,year,textFields,textText,addEdit,deleter);
+		anchorpane.getChildren().addAll(listview,song,artist,album,year,textText,textFields,addEdit,deleter);
 
 		songText.setFont(Font.font("Arial",12));
 		artistText.setFont(Font.font("Arial",12));
