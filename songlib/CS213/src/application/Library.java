@@ -1,3 +1,7 @@
+/*
+ * Written by Jason Holley and Rituraj Kumar
+ */
+
 package application;
 
 import java.util.*;
@@ -93,11 +97,11 @@ public class Library {
 			writer = new BufferedWriter(fstream);
 			writer.write("\n" + name + "\n");
 			writer.write(artist + "\n");
-			if(album.equals(""))
+			if(album.equalsIgnoreCase(""))
 				writer.write("_\n");
 			else
 				writer.write(album + "\n");
-			if(year.equals(""))
+			if(year.equalsIgnoreCase(""))
 				writer.write("_");
 			else
 				writer.write(year);
@@ -105,29 +109,49 @@ public class Library {
 		}
 	}
 
-	public void editSongName(Song s, String NewName) throws IOException{
+	public boolean editSongNameAndArtistName(Song s, String NewName, String NewArtist) throws IOException{
+		//returns false if can't edit, true if edited
+			int x;
+			x = searchList(NewName, NewArtist);			//check if new name song already exists
+			if(x==-1){
+				//popup that says we can't have duplicates
+				return false;
+			}
+
+			deleteSong(x, s.song, s.artist);
+			s.song = NewName;
+			s.artist = NewArtist;
+			addSong(s.song, s.artist, s.album, s.year);
+			return true;
+	}
+
+	public boolean editSongName(Song s, String NewName) throws IOException{
+		//returns false if can't edit songName, true if edited
 			int x;
 			x = searchList(NewName, s.artist);			//check if new name song already exists
 			if(x==-1){
 				//popup that says we can't have duplicates
-				return;
+				return false;
 			}
 
 			deleteSong(x, s.song, s.artist);
 			s.song = NewName;
 			addSong(s.song, s.artist, s.album, s.year);
+			return true;
 	}
 
-	public void editArtist(Song s, String NewArtist) throws IOException{
+	public boolean editArtist(Song s, String NewArtist) throws IOException{
+		//returns false if can't edit artistName, true if edited
 		int x;
 		x = searchList(s.song, NewArtist);			//check if new name song already exists
 		if(x==-1){
 			//popup that says we can't have duplicates
-			return;
+			return false;
 		}
 		deleteSong(x, s.song, s.artist);
 		s.artist = NewArtist;
 		abcsong(s);
+		return true;
 	}
 
 	public void editAlbum(Song s, String NewAlbum){
@@ -177,10 +201,10 @@ public class Library {
 		String currentLine;
 
 		while((currentLine = reader.readLine()) != null){
-			if(currentLine.equals(song)){
+			if(currentLine.equalsIgnoreCase(song)){
 				//if song name is found check for artist name that matches
 				currentLine = reader.readLine();
-				if(currentLine.equals(artist)){
+				if(currentLine.equalsIgnoreCase(artist)){
 					//skip next 2 lines
 					currentLine = reader.readLine();
 					currentLine = reader.readLine();

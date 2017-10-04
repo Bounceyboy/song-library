@@ -1,3 +1,8 @@
+/*
+ * Written by Jason Holley and Rituraj Kumar
+ */
+
+
 package application;
 
 public class Song {
@@ -22,7 +27,7 @@ public class Song {
 			year=Year;
 		}
 	}
-	
+
 	public String detail(){
 		if(this.album==null && this.year==null){
 			return "Song: " + this.song + "\nArtist: " + this.artist;
@@ -33,17 +38,16 @@ public class Song {
 		else if(this.year==null){
 			return "Song: " + this.song + "\nArtist: " + this.artist+ "\nAlbum: " + this.album;
 		}
-		
+
 		return "Song: " + this.song + "\nArtist: " + this.artist+ "\nAlbum: "+ this.album +"\nYear: "+ this.year;
-		
+
 	}
 
 	public String toString(){
-		
-		return "Song: " + this.song + "\tArtist: " + this.artist;
-		
-	}
-	
-	
-}
 
+		return "Song: " + this.song + "\tArtist: " + this.artist;
+
+	}
+
+
+}
