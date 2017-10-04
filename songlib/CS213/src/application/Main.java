@@ -252,6 +252,7 @@ public class Main extends Application {
 	}
 
 	private void details(Stage a){
+		if(obs.contains(listview.getSelectionModel().getSelectedItem())){
 		song.setText("Song: "+listview.getSelectionModel().getSelectedItem().song);
 		artist.setText("Artist: "+listview.getSelectionModel().getSelectedItem().artist);
 		if(listview.getSelectionModel().getSelectedItem().album != null){
@@ -259,11 +260,22 @@ public class Main extends Application {
 			year.setLayoutY(55);
 		}
 		else{
-			 album.setText(null);
-			 year.setLayoutY(40);
+			album.setText(null);
+			year.setLayoutY(40);
 		}
 		if(listview.getSelectionModel().getSelectedItem().year != null){
+			
 			year.setText("Year: "+listview.getSelectionModel().getSelectedItem().year);
+		}
+		else{
+			year.setText(null);
+		}
+		}
+		else{
+			song.setText(null);
+			artist.setText(null);
+			album.setText(null);
+			year.setText(null);
 		}
 	}
 
