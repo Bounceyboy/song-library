@@ -205,10 +205,19 @@ public class Main extends Application {
 
 							}
 						if(!albumField.getText().isEmpty()){
-							songlib.editAlbum(listview.getSelectionModel().getSelectedItem(), albumField.getText());
+							try {
+								songlib.editAlbum(p, listview.getSelectionModel().getSelectedItem(), albumField.getText());
+							} catch (IOException e1) {
+
+								e1.printStackTrace();
+							}
 						}
 						if(!yearField.getText().isEmpty()){
-							songlib.editAlbum(listview.getSelectionModel().getSelectedItem(), yearField.getText());
+							try {
+								songlib.editAlbum(p, listview.getSelectionModel().getSelectedItem(), yearField.getText());
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
 						}
 
 						listview.getSelectionModel().select(p);
@@ -264,7 +273,7 @@ public class Main extends Application {
 			year.setLayoutY(40);
 		}
 		if(listview.getSelectionModel().getSelectedItem().year != null){
-			
+
 			year.setText("Year: "+listview.getSelectionModel().getSelectedItem().year);
 		}
 		else{

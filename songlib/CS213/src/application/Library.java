@@ -38,7 +38,7 @@ public class Library {
 	private static int abcsong(Song a){ //sorts songs in order
 		//returns 1 if added song, 0 otherwise
 		for(int i=0;i<lib.size();i++){
-			int comp=a.song.compareTo(lib.get(i).song);
+			int comp=a.song.compareToIgnoreCase(lib.get(i).song);
 			if(comp==0){//same song check artist
 				return abcartist(a,i);
 			}
@@ -55,8 +55,8 @@ public class Library {
 	private static int abcartist(Song a, int size){ //if two songs have the same name sorts by artist
 		//returns 1 if added song, 0 otherwise
 
-		while((a.song.compareTo(lib.get(size).song))==0){//while it is the same song: checks each artist in case of multiple duplicates
-			int comp=a.artist.compareTo(lib.get(size).artist);
+		while((a.song.compareToIgnoreCase(lib.get(size).song))==0){//while it is the same song: checks each artist in case of multiple duplicates
+			int comp=a.artist.compareToIgnoreCase(lib.get(size).artist);
 			if(comp==0){
 				//Pop-up saying song already exist needed for Song add
 				//same song and artist
@@ -154,27 +154,31 @@ public class Library {
 		return true;
 	}
 
-	public void editAlbum(Song s, String NewAlbum){
+	public void editAlbum(int index, Song s, String NewAlbum) throws IOException{
+		deleteSong(index, s.song, s.album);
+		addSong(s.song, s.artist, NewAlbum, s.year);
 		s.album = NewAlbum;
 	}
 
-	public void editYear(Song s, String NewYear){
+	public void editYear(int index, Song s, String NewYear) throws IOException{
+		deleteSong(index, s.song, s.album);
+		addSong(s.song, s.artist, s.album, NewYear);
 		s.year = NewYear;
 	}
 
 	public int searchList(String song, String artist){
 		//returns -1 if found, otherwise returns the index where the song will be placed (to be used for edit functions)
 		for(int i=0;i<lib.size();i++){
-			int comp = song.compareTo(lib.get(i).song);
+			int comp = song.compareToIgnoreCase(lib.get(i).song);
 
 			if(comp==0){
 				while(comp==0){	//if song matches, search if a song with that name has same album
-					int compArtist = artist.compareTo(lib.get(i).artist);
+					int compArtist = artist.compareToIgnoreCase(lib.get(i).artist);
 					if(compArtist==0)
 						return -1;
 					else{
 						i++;
-						comp = song.compareTo(lib.get(i).song);
+						comp = song.compareToIgnoreCase(lib.get(i).song);
 					}
 				}
 			}
