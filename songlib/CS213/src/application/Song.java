@@ -16,34 +16,34 @@ public class Song {
 			album=Album;
 		}
 		if(Year.equals("_")){
-			year="0";
+			year=null;
 		}
 		else{
 			year=Year;
 		}
 	}
-
+	
 	public String detail(){
-		if(this.album==null && this.year=="0"){
-			return "Song: " + this.song + "\tArtist: " + this.artist;
+		if(this.album==null && this.year==null){
+			return "Song: " + this.song + "\nArtist: " + this.artist;
 		}
 		else if(this.album==null){
-			return "Song: " + this.song + "\tArtist: " + this.artist + "\tYear: " + this.year;
+			return "Song: " + this.song + "\nArtist: " + this.artist + "\nYear: " + this.year;
 		}
-		else if(this.year=="0"){
-			return "Song: " + this.song + "\tArtist: " + this.artist+ "\tAlbum: " + this.album;
+		else if(this.year==null){
+			return "Song: " + this.song + "\nArtist: " + this.artist+ "\nAlbum: " + this.album;
 		}
-
-		return "Song: " + this.song + "\tArtist: " + this.artist+ "\tAlbum: "+ this.album +"\tYear: "+ this.year;
-
+		
+		return "Song: " + this.song + "\nArtist: " + this.artist+ "\nAlbum: "+ this.album +"\nYear: "+ this.year;
+		
 	}
 
 	public String toString(){
-
+		
 		return "Song: " + this.song + "\tArtist: " + this.artist;
-
+		
 	}
-
-
+	
+	
 }
 
