@@ -251,6 +251,39 @@ public class Main extends Application {
 								}
 
 							}
+						else if(!songField.getText().isEmpty() && artistField.getText().isEmpty()){
+							try {
+								boolean last = songlib.editSongName(p, obs.get(p), songField.getText());
+								if(last==false){
+									Alert duplicate = new Alert(AlertType.INFORMATION);
+									duplicate.setTitle("Error");
+									duplicate.setHeaderText(null);
+									duplicate.setContentText("This song already exists. You cannot have duplicates.");
+									duplicate.showAndWait();
+									return;
+								}
+
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+						}
+						else if(songField.getText().isEmpty() && !artistField.getText().isEmpty()){
+							try {
+								boolean last = songlib.editArtist(p, obs.get(p), artistField.getText());
+								if(last==false){
+									Alert duplicate = new Alert(AlertType.INFORMATION);
+									duplicate.setTitle("Error");
+									duplicate.setHeaderText(null);
+									duplicate.setContentText("This song already exists. You cannot have duplicates.");
+									duplicate.showAndWait();
+									return;
+								}
+
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+
+						}
 						if(!albumField.getText().isEmpty()){
 							try {
 								songlib.editAlbum(p, obs.get(p), albumField.getText());
