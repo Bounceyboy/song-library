@@ -101,6 +101,14 @@ public class Main extends Application {
 
 		addButton.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
+				
+				Alert youSure = new Alert(AlertType.CONFIRMATION);
+				youSure.setTitle("Delete Song");
+				youSure.setHeaderText(null);
+				youSure.setContentText("Are you sure you want to delete the currently selected song?");
+
+				Optional<ButtonType> result = youSure.showAndWait();
+				
 				if(songField.getText().isEmpty() || artistField.getText().isEmpty()){
 					Alert emptyFields = new Alert(AlertType.INFORMATION);
 					emptyFields.setTitle("Error");
