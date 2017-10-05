@@ -127,7 +127,7 @@ public class Library {
 			deleteSong(index, s.song, s.artist);
 			s.song = NewName;
 			s.artist = NewArtist;
-			addSong(s.song, s.artist, s.album, s.year);
+			x = addSong(s.song, s.artist, s.album, s.year);
 			return x;
 	}
 
@@ -142,7 +142,7 @@ public class Library {
 
 			deleteSong(index, s.song, s.artist);
 			s.song = NewName;
-			addSong(s.song, s.artist, s.album, s.year);
+			x = addSong(s.song, s.artist, s.album, s.year);
 			return x;
 	}
 
@@ -156,7 +156,7 @@ public class Library {
 		}
 		deleteSong(index, s.song, s.artist);
 		s.artist = NewArtist;
-		abcsong(s);
+		x = addSong(s.song, s.artist, s.album, s.year);
 		return x;
 	}
 
