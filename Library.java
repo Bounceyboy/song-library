@@ -86,8 +86,9 @@ public class Library {
 		}
 	}
 
-	public void addSong(String name, String artist, String album, String year) throws IOException{
+	public boolean addSong(String name, String artist, String album, String year) throws IOException{
 		//adds the song to the arraylist and then to the end of the file if successfully added
+		//returns 1 if added a song, 0 if not
 		Song toAdd = new Song(name, artist, album, year);
 		int z = abcsong(toAdd);
 
@@ -106,7 +107,11 @@ public class Library {
 			else
 				writer.write(year);
 			writer.close();
+			return true;
 		}
+		return false;
+
+
 	}
 
 	public boolean editSongNameAndArtistName(Song s, String NewName, String NewArtist) throws IOException{
@@ -154,11 +159,15 @@ public class Library {
 		return true;
 	}
 
-	public void editAlbum(Song s, String NewAlbum){
+	public void editAlbum(int index, Song s, String NewAlbum) throws IOException{
+		deleteSong(index, s.song, s.album);
+		addSong(s.song, s.artist, NewAlbum, s.year);
 		s.album = NewAlbum;
 	}
 
-	public void editYear(Song s, String NewYear){
+	public void editYear(int index, Song s, String NewYear) throws IOException{
+		deleteSong(index, s.song, s.album);
+		addSong(s.song, s.artist, s.album, NewYear);
 		s.year = NewYear;
 	}
 
@@ -192,7 +201,6 @@ public class Library {
 
 	public void deleteSong(int x, String song, String artist) throws IOException{
 			//deletes song at given index and deletes song in file
-		//TODO fix delete in file
 		File old = new File("Songs");
 		String everythingElse = "";
 
