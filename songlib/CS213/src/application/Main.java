@@ -222,7 +222,7 @@ public class Main extends Application {
 						}
 						if(!yearField.getText().isEmpty()){
 							try {
-								songlib.editAlbum(p, listview.getSelectionModel().getSelectedItem(), yearField.getText());
+								songlib.editYear(p, listview.getSelectionModel().getSelectedItem(), yearField.getText());
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
