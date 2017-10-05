@@ -211,12 +211,6 @@ public class Main extends Application {
 										duplicate.showAndWait();
 										return;
 									}
-									else{
-										songField.clear();
-										artistField.clear();
-										albumField.clear();
-										yearField.clear();
-									}
 
 								} catch (IOException e1) {
 									e1.printStackTrace();
@@ -234,12 +228,6 @@ public class Main extends Application {
 											duplicate.showAndWait();
 											return;
 										}
-										else{
-											songField.clear();
-											artistField.clear();
-											albumField.clear();
-											yearField.clear();
-										}
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
@@ -254,12 +242,6 @@ public class Main extends Application {
 											duplicate.setContentText("This song already exists. You cannot have duplicates.");
 											duplicate.showAndWait();
 											return;
-										}
-										else{
-											songField.clear();
-											artistField.clear();
-											albumField.clear();
-											yearField.clear();
 										}
 									} catch (IOException e1) {
 										e1.printStackTrace();
@@ -276,10 +258,6 @@ public class Main extends Application {
 
 								e1.printStackTrace();
 							}
-							songField.clear();
-							artistField.clear();
-							albumField.clear();
-							yearField.clear();
 						}
 						if(!yearField.getText().isEmpty()){
 							try {
@@ -287,10 +265,6 @@ public class Main extends Application {
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
-							songField.clear();
-							artistField.clear();
-							albumField.clear();
-							yearField.clear();
 						}
 
 						listview.getSelectionModel().select(p);
@@ -302,7 +276,12 @@ public class Main extends Application {
 						}
 					}
 				}
+				songField.clear();
+				artistField.clear();
+				albumField.clear();
+				yearField.clear();
 			}
+
 		});
 
 
