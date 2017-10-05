@@ -171,7 +171,12 @@ public class Main extends Application {
 						obs.add(Library.lib.get(a));
 					}
 					listview.getSelectionModel().selectedItemProperty().addListener((obs,oldval,newval)->details(primaryStage));
-					listview.getSelectionModel().select(p);
+					if(obs.size()==p){
+						listview.getSelectionModel().select(p-1);
+					}
+					else{
+						listview.getSelectionModel().select(p);
+					}
 				}
 				songField.clear();
 				artistField.clear();
