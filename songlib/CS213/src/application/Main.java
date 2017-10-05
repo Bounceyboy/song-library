@@ -116,8 +116,17 @@ public class Main extends Application {
 				}
 				else{
 					try {
-						boolean last = songlib.addSong(songField.getText(),artistField.getText(),albumField.getText(),yearField.getText());
-						if(last==true){
+						int last = songlib.addSong(songField.getText(),artistField.getText(),albumField.getText(),yearField.getText());
+						if(last!=-1){
+							while(!obs.isEmpty()){
+								obs.remove(0);
+							}
+							for(int a=0;a<Library.lib.size();a++){
+								obs.add(Library.lib.get(a));
+							}
+
+						listview.getSelectionModel().selectedItemProperty().addListener((obs,oldval,newval)->details(primaryStage));
+						listview.getSelectionModel().select(last);
 							songField.clear();
 							artistField.clear();
 							albumField.clear();
@@ -133,13 +142,6 @@ public class Main extends Application {
 						}
 					} catch (IOException e1) {
 						e1.printStackTrace();
-					}
-
-					while(!obs.isEmpty()){
-						obs.remove(0);
-					}
-					for(int a=0;a<Library.lib.size();a++){
-						obs.add(Library.lib.get(a));
 					}
 
 				}
@@ -162,13 +164,14 @@ public class Main extends Application {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					listview.getFocusModel().focus(p);
 					while(!obs.isEmpty()){
 						obs.remove(0);
 					}
 					for(int a=0;a<Library.lib.size();a++){
 						obs.add(Library.lib.get(a));
 					}
+					listview.getSelectionModel().selectedItemProperty().addListener((obs,oldval,newval)->details(primaryStage));
+					listview.getSelectionModel().select(p);
 				}
 				songField.clear();
 				artistField.clear();
@@ -196,11 +199,12 @@ public class Main extends Application {
 					Optional<ButtonType> result = youSure.showAndWait();
 					if(result.get() == ButtonType.OK){
 						int p = listview.getSelectionModel().getSelectedIndex();
+						int index = 0;
 						if(!songField.getText().isEmpty() && !artistField.getText().isEmpty()){
 							if(!songField.getText().equalsIgnoreCase(song.toString()) && !artistField.getText().equalsIgnoreCase(artist.toString())){
 								try {
-									boolean last = songlib.editSongNameAndArtistName(p, obs.get(p), songField.getText(), artistField.getText());
-									if(last==false){
+									index = songlib.editSongNameAndArtistName(p, obs.get(p), songField.getText(), artistField.getText());
+									if(index==-1){
 										Alert duplicate = new Alert(AlertType.INFORMATION);
 										duplicate.setTitle("Error");
 										duplicate.setHeaderText(null);
@@ -216,8 +220,8 @@ public class Main extends Application {
 							else{
 								if(!songField.getText().equalsIgnoreCase(song.toString())){
 									try {
-										boolean last = songlib.editSongName(p, obs.get(p), songField.getText());
-										if(last==false){
+										index = songlib.editSongName(p, obs.get(p), songField.getText());
+										if(index==-1){
 											Alert duplicate = new Alert(AlertType.INFORMATION);
 											duplicate.setTitle("Error");
 											duplicate.setHeaderText(null);
@@ -231,8 +235,8 @@ public class Main extends Application {
 									}
 								else{
 									try {
-										boolean last = songlib.editArtist(p, obs.get(p), artistField.getText());
-										if(last==false){
+										index = songlib.editArtist(p, obs.get(p), artistField.getText());
+										if(index==-1){
 											Alert duplicate = new Alert(AlertType.INFORMATION);
 											duplicate.setTitle("Error");
 											duplicate.setHeaderText(null);
@@ -250,8 +254,8 @@ public class Main extends Application {
 							}
 						else if(!songField.getText().isEmpty() && artistField.getText().isEmpty()){
 							try {
-								boolean last = songlib.editSongName(p, obs.get(p), songField.getText());
-								if(last==false){
+								index = songlib.editSongName(p, obs.get(p), songField.getText());
+								if(index==-1){
 									Alert duplicate = new Alert(AlertType.INFORMATION);
 									duplicate.setTitle("Error");
 									duplicate.setHeaderText(null);
@@ -266,8 +270,8 @@ public class Main extends Application {
 						}
 						else if(songField.getText().isEmpty() && !artistField.getText().isEmpty()){
 							try {
-								boolean last = songlib.editArtist(p, obs.get(p), artistField.getText());
-								if(last==false){
+								index = songlib.editArtist(p, obs.get(p), artistField.getText());
+								if(index==-1){
 									Alert duplicate = new Alert(AlertType.INFORMATION);
 									duplicate.setTitle("Error");
 									duplicate.setHeaderText(null);
@@ -297,13 +301,16 @@ public class Main extends Application {
 							}
 						}
 
-						listview.getSelectionModel().select(p);
 						while(!obs.isEmpty()){
 							obs.remove(0);
 						}
 						for(int a=0;a<Library.lib.size();a++){
 							obs.add(Library.lib.get(a));
 						}
+
+						listview.getSelectionModel().selectedItemProperty().addListener((obs,oldval,newval)->details(primaryStage));
+						listview.getSelectionModel().select(index);
+
 					}
 				}
 				songField.clear();

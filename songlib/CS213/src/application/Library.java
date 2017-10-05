@@ -86,10 +86,11 @@ public class Library {
 		}
 	}
 
-	public boolean addSong(String name, String artist, String album, String year) throws IOException{
-		//adds the song to the arraylist and then to the end of the file if successfully added
-		//returns 1 if added a song, 0 if not
+	public int addSong(String name, String artist, String album, String year) throws IOException{
+		//adds the song to the arraylist and then to the end of the file if successfully added or -1 if not added
+		//returns the index at which the song was added
 		Song toAdd = new Song(name, artist, album, year);
+		int g = searchList(name, artist);
 		int z = abcsong(toAdd);
 
 		if(z==1){
@@ -107,56 +108,56 @@ public class Library {
 			else
 				writer.write(year);
 			writer.close();
-			return true;
+			return g;
 		}
-		return false;
+		return -1;
 
 
 	}
 
-	public boolean editSongNameAndArtistName(int index, Song s, String NewName, String NewArtist) throws IOException{
-		//returns false if can't edit, true if edited
+	public int editSongNameAndArtistName(int index, Song s, String NewName, String NewArtist) throws IOException{
+		//returns new index or -1 if can't edit
 			int x;
 			x = searchList(NewName, NewArtist);			//check if new name song already exists
 			if(x==-1){
 				//popup that says we can't have duplicates
-				return false;
+				return x;
 			}
 
 			deleteSong(index, s.song, s.artist);
 			s.song = NewName;
 			s.artist = NewArtist;
 			addSong(s.song, s.artist, s.album, s.year);
-			return true;
+			return x;
 	}
 
-	public boolean editSongName(int index, Song s, String NewName) throws IOException{
-		//returns false if can't edit songName, true if edited
+	public int editSongName(int index, Song s, String NewName) throws IOException{
+		//returns new index or -1 if can't edit
 			int x;
 			x = searchList(NewName, s.artist);			//check if new name song already exists
 			if(x==-1){
 				//popup that says we can't have duplicates
-				return false;
+				return x;
 			}
 
 			deleteSong(index, s.song, s.artist);
 			s.song = NewName;
 			addSong(s.song, s.artist, s.album, s.year);
-			return true;
+			return x;
 	}
 
-	public boolean editArtist(int index, Song s, String NewArtist) throws IOException{
-		//returns false if can't edit artistName, true if edited
+	public int editArtist(int index, Song s, String NewArtist) throws IOException{
+		//returns new index or -1 if can't edit
 		int x;
 		x = searchList(s.song, NewArtist);			//check if new name song already exists
 		if(x==-1){
 			//popup that says we can't have duplicates
-			return false;
+			return x;
 		}
 		deleteSong(index, s.song, s.artist);
 		s.artist = NewArtist;
 		abcsong(s);
-		return true;
+		return x;
 	}
 
 	public void editAlbum(int index, Song s, String NewAlbum) throws IOException{
