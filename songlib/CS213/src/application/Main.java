@@ -70,6 +70,7 @@ public class Main extends Application {
 		listview.getSelectionModel().selectedItemProperty().addListener((obs,oldval,newval)->details(primaryStage));
 		listview.getSelectionModel().select(0);
 
+
 		primaryStage.setTitle("Playlist");
 		AnchorPane anchorpane = new AnchorPane();
 
@@ -101,11 +102,11 @@ public class Main extends Application {
 
 		addButton.setOnAction(new EventHandler<ActionEvent>(){
 			@Override public void handle(ActionEvent e){
-				
+
 				Alert youSure = new Alert(AlertType.CONFIRMATION);
-				youSure.setTitle("Delete Song");
+				youSure.setTitle("Add Song");
 				youSure.setHeaderText(null);
-				youSure.setContentText("Are you sure you want to delete the currently selected song?");
+				youSure.setContentText("Are you sure you want to add this song?");
 
 				Optional<ButtonType> result = youSure.showAndWait();
 				if(result.get() == ButtonType.OK){
@@ -114,16 +115,25 @@ public class Main extends Application {
 					emptyFields.setTitle("Error");
 					emptyFields.setHeaderText(null);
 					emptyFields.setContentText("Could not add song. Neither the \"Song name\" nor \"Artist name\" field can be empty.");
-
 					emptyFields.showAndWait();
 				}
 				else{
 					try {
-						songlib.addSong(songField.getText(),artistField.getText(),albumField.getText(),yearField.getText());
-						songField.clear();
-						artistField.clear();
-						albumField.clear();
-						yearField.clear();
+						boolean last = songlib.addSong(songField.getText(),artistField.getText(),albumField.getText(),yearField.getText());
+						if(last==true){
+							songField.clear();
+							artistField.clear();
+							albumField.clear();
+							yearField.clear();
+						}
+						else{
+							Alert duplicate = new Alert(AlertType.INFORMATION);
+							duplicate.setTitle("Error");
+							duplicate.setHeaderText(null);
+							duplicate.setContentText("This song already exists. You cannot add duplicates.");
+							duplicate.showAndWait();
+							return;
+						}
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
@@ -137,6 +147,7 @@ public class Main extends Application {
 
 				}
 			}
+		}
 		});
 
 		deleteButton.setOnAction(new EventHandler<ActionEvent>(){
@@ -150,11 +161,11 @@ public class Main extends Application {
 				if(result.get() == ButtonType.OK){
 					int p = listview.getSelectionModel().getSelectedIndex();
 					try {
-						songlib.deleteSong(p, listview.getSelectionModel().getSelectedItem().song, listview.getSelectionModel().getSelectedItem().artist);
+						songlib.deleteSong(p, obs.get(p).song, obs.get(p).artist);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					listview.getSelectionModel().select(p);
+					listview.getFocusModel().focus(p);
 					while(!obs.isEmpty()){
 						obs.remove(0);
 					}
@@ -162,7 +173,10 @@ public class Main extends Application {
 						obs.add(Library.lib.get(a));
 					}
 				}
-			}
+				songField.clear();
+				artistField.clear();
+				albumField.clear();
+				yearField.clear();
 			}
 		});
 
@@ -188,7 +202,22 @@ public class Main extends Application {
 						if(!songField.getText().isEmpty() && !artistField.getText().isEmpty()){
 							if(!songField.getText().equalsIgnoreCase(song.toString()) && !artistField.getText().equalsIgnoreCase(artist.toString())){
 								try {
-									songlib.editSongNameAndArtistName(listview.getSelectionModel().getSelectedItem(), songField.getText(), artistField.getText());
+									boolean last = songlib.editSongNameAndArtistName(obs.get(p), songField.getText(), artistField.getText());
+									if(last==false){
+										Alert duplicate = new Alert(AlertType.INFORMATION);
+										duplicate.setTitle("Error");
+										duplicate.setHeaderText(null);
+										duplicate.setContentText("This song already exists. You cannot have duplicates.");
+										duplicate.showAndWait();
+										return;
+									}
+									else{
+										songField.clear();
+										artistField.clear();
+										albumField.clear();
+										yearField.clear();
+									}
+
 								} catch (IOException e1) {
 									e1.printStackTrace();
 								}
@@ -196,14 +225,42 @@ public class Main extends Application {
 							else{
 								if(!songField.getText().equalsIgnoreCase(song.toString())){
 									try {
-										songlib.editSongName(listview.getSelectionModel().getSelectedItem(), songField.getText());
+										boolean last = songlib.editSongName(obs.get(p), songField.getText());
+										if(last==false){
+											Alert duplicate = new Alert(AlertType.INFORMATION);
+											duplicate.setTitle("Error");
+											duplicate.setHeaderText(null);
+											duplicate.setContentText("This song already exists. You cannot have duplicates.");
+											duplicate.showAndWait();
+											return;
+										}
+										else{
+											songField.clear();
+											artistField.clear();
+											albumField.clear();
+											yearField.clear();
+										}
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
 									}
 								else{
 									try {
-										songlib.editArtist(listview.getSelectionModel().getSelectedItem(), artistField.getText());
+										boolean last = songlib.editArtist(obs.get(p), artistField.getText());
+										if(last==false){
+											Alert duplicate = new Alert(AlertType.INFORMATION);
+											duplicate.setTitle("Error");
+											duplicate.setHeaderText(null);
+											duplicate.setContentText("This song already exists. You cannot have duplicates.");
+											duplicate.showAndWait();
+											return;
+										}
+										else{
+											songField.clear();
+											artistField.clear();
+											albumField.clear();
+											yearField.clear();
+										}
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
@@ -214,18 +271,26 @@ public class Main extends Application {
 							}
 						if(!albumField.getText().isEmpty()){
 							try {
-								songlib.editAlbum(p, listview.getSelectionModel().getSelectedItem(), albumField.getText());
+								songlib.editAlbum(p, obs.get(p), albumField.getText());
 							} catch (IOException e1) {
 
 								e1.printStackTrace();
 							}
+							songField.clear();
+							artistField.clear();
+							albumField.clear();
+							yearField.clear();
 						}
 						if(!yearField.getText().isEmpty()){
 							try {
-								songlib.editYear(p, listview.getSelectionModel().getSelectedItem(), yearField.getText());
+								songlib.editYear(p, obs.get(p), yearField.getText());
 							} catch (IOException e1) {
 								e1.printStackTrace();
 							}
+							songField.clear();
+							artistField.clear();
+							albumField.clear();
+							yearField.clear();
 						}
 
 						listview.getSelectionModel().select(p);
@@ -262,7 +327,7 @@ public class Main extends Application {
 		AnchorPane.setLeftAnchor(deleter, 250.0);
 
 
-		scene = new Scene(anchorpane,650,400);
+		scene = new Scene(anchorpane,520,400);
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
