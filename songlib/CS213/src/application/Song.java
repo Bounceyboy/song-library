@@ -15,13 +15,13 @@ public class Song {
 		song=name;
 		artist=Artist;
 		if(Album.equals("_")){
-			album=null;
+			album="";
 		}
 		else{
 			album=Album;
 		}
 		if(Year.equals("_")){
-			year=null;
+			year="";
 		}
 		else{
 			year=Year;

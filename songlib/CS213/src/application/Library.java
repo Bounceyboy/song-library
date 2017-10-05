@@ -114,7 +114,7 @@ public class Library {
 
 	}
 
-	public boolean editSongNameAndArtistName(Song s, String NewName, String NewArtist) throws IOException{
+	public boolean editSongNameAndArtistName(int index, Song s, String NewName, String NewArtist) throws IOException{
 		//returns false if can't edit, true if edited
 			int x;
 			x = searchList(NewName, NewArtist);			//check if new name song already exists
@@ -123,14 +123,14 @@ public class Library {
 				return false;
 			}
 
-			deleteSong(x, s.song, s.artist);
+			deleteSong(index, s.song, s.artist);
 			s.song = NewName;
 			s.artist = NewArtist;
 			addSong(s.song, s.artist, s.album, s.year);
 			return true;
 	}
 
-	public boolean editSongName(Song s, String NewName) throws IOException{
+	public boolean editSongName(int index, Song s, String NewName) throws IOException{
 		//returns false if can't edit songName, true if edited
 			int x;
 			x = searchList(NewName, s.artist);			//check if new name song already exists
@@ -139,13 +139,13 @@ public class Library {
 				return false;
 			}
 
-			deleteSong(x, s.song, s.artist);
+			deleteSong(index, s.song, s.artist);
 			s.song = NewName;
 			addSong(s.song, s.artist, s.album, s.year);
 			return true;
 	}
 
-	public boolean editArtist(Song s, String NewArtist) throws IOException{
+	public boolean editArtist(int index, Song s, String NewArtist) throws IOException{
 		//returns false if can't edit artistName, true if edited
 		int x;
 		x = searchList(s.song, NewArtist);			//check if new name song already exists
@@ -153,20 +153,20 @@ public class Library {
 			//popup that says we can't have duplicates
 			return false;
 		}
-		deleteSong(x, s.song, s.artist);
+		deleteSong(index, s.song, s.artist);
 		s.artist = NewArtist;
 		abcsong(s);
 		return true;
 	}
 
 	public void editAlbum(int index, Song s, String NewAlbum) throws IOException{
-		deleteSong(index, s.song, s.album);
+		deleteSong(index, s.song, s.artist);
 		addSong(s.song, s.artist, NewAlbum, s.year);
 		s.album = NewAlbum;
 	}
 
 	public void editYear(int index, Song s, String NewYear) throws IOException{
-		deleteSong(index, s.song, s.album);
+		deleteSong(index, s.song, s.artist);
 		addSong(s.song, s.artist, s.album, NewYear);
 		s.year = NewYear;
 	}

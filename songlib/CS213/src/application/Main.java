@@ -202,8 +202,7 @@ public class Main extends Application {
 						if(!songField.getText().isEmpty() && !artistField.getText().isEmpty()){
 							if(!songField.getText().equalsIgnoreCase(song.toString()) && !artistField.getText().equalsIgnoreCase(artist.toString())){
 								try {
-									//System.out.println(obs.get(p).song + "\t" + obs.get(p).artist);
-									boolean last = songlib.editSongNameAndArtistName(obs.get(p), songField.getText(), artistField.getText());
+									boolean last = songlib.editSongNameAndArtistName(p, obs.get(p), songField.getText(), artistField.getText());
 									if(last==false){
 										Alert duplicate = new Alert(AlertType.INFORMATION);
 										duplicate.setTitle("Error");
@@ -226,7 +225,7 @@ public class Main extends Application {
 							else{
 								if(!songField.getText().equalsIgnoreCase(song.toString())){
 									try {
-										boolean last = songlib.editSongName(obs.get(p), songField.getText());
+										boolean last = songlib.editSongName(p, obs.get(p), songField.getText());
 										if(last==false){
 											Alert duplicate = new Alert(AlertType.INFORMATION);
 											duplicate.setTitle("Error");
@@ -247,7 +246,7 @@ public class Main extends Application {
 									}
 								else{
 									try {
-										boolean last = songlib.editArtist(obs.get(p), artistField.getText());
+										boolean last = songlib.editArtist(p, obs.get(p), artistField.getText());
 										if(last==false){
 											Alert duplicate = new Alert(AlertType.INFORMATION);
 											duplicate.setTitle("Error");
