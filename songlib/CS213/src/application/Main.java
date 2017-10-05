@@ -202,6 +202,7 @@ public class Main extends Application {
 						if(!songField.getText().isEmpty() && !artistField.getText().isEmpty()){
 							if(!songField.getText().equalsIgnoreCase(song.toString()) && !artistField.getText().equalsIgnoreCase(artist.toString())){
 								try {
+									//System.out.println(obs.get(p).song + "\t" + obs.get(p).artist);
 									boolean last = songlib.editSongNameAndArtistName(obs.get(p), songField.getText(), artistField.getText());
 									if(last==false){
 										Alert duplicate = new Alert(AlertType.INFORMATION);
