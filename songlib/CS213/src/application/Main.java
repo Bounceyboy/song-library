@@ -108,7 +108,7 @@ public class Main extends Application {
 				youSure.setContentText("Are you sure you want to delete the currently selected song?");
 
 				Optional<ButtonType> result = youSure.showAndWait();
-				
+				if(result.get() == ButtonType.OK){
 				if(songField.getText().isEmpty() || artistField.getText().isEmpty()){
 					Alert emptyFields = new Alert(AlertType.INFORMATION);
 					emptyFields.setTitle("Error");
@@ -162,7 +162,7 @@ public class Main extends Application {
 						obs.add(Library.lib.get(a));
 					}
 				}
-
+			}
 			}
 		});
 
